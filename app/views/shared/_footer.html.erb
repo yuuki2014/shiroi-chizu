@@ -12,12 +12,12 @@
           <span class="text-xs">履歴</span>
         <% end %>
 
-        <%= link_to root_path, class: tab_class(root_path) do %>
+        <%= link_to new_user_registration_path, class: tab_class(new_user_registration_path) do %>
           <%= lucide_icon('users') %>
           <span class="text-xs">みんなの地図</span>
         <% end %>
 
-        <%= link_to "###", class: tab_class("###") do %>
+        <%= link_to new_user_session_path, class: tab_class(new_user_session_path) do %>
           <%= lucide_icon('circle-user-round') %>
           <span class="text-xs">マイページ</span>
         <% end %>

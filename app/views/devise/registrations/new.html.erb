@@ -1,0 +1,90 @@
+<%# ヘッダー %>
+<% content_for :header do %>
+  <%= render 'shared/header', back_path: root_path, title: "新規会員登録", bg_color: "bg-orange-300" %>
+<% end %>
+
+<%# メインコンテナ %>
+<div class="min-h-screen bg-[#F7F3C7] flex flex-col items-center px-6 pb-10 font-sans text-gray-800">
+
+  <%# 1. 文言エリア %>
+  <div class="mt-10 pt-4 pb-4 w-full flex justify-center">
+  </div>
+
+  <%# 2. フォームエリア %>
+  <div class="w-full max-w-sm">
+    <%= form_with(model: resource, url: registration_path(resource_name), class: "space-y-6") do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <%# メールアドレス %>
+      <div class="field">
+        <%= f.label :email, "メールアドレス", class: "block text-sm font-bold mb-2" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "shiroi_chizu@test.com",
+            class: "w-full px-4 py-3 rounded-xl border-none shadow-sm text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-orange-300 outline-none" %>
+      </div>
+
+      <%# パスワード %>
+      <div class="field">
+        <div class="flex items-center mb-2 gap-3">
+          <%= f.label :password, "パスワード", class: "text-sm font-bold" %>
+
+          <% if @minimum_password_length %>
+            <span class="text-xs text-gray-400">
+              ※ <%= @minimum_password_length %>文字以上
+            </span>
+          <% end %><br />
+        </div>
+
+        <div class="relative">
+          <%= f.password_field :password, autocomplete: "new-password", placeholder: "••••••••••••••••",
+              class: "w-full px-4 py-3 rounded-xl border-none shadow-sm text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-orange-300 outline-none tracking-widest" %>
+
+          <%# 目のアイコン（見た目のみ） %>
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500">
+            <%= lucide_icon('eye', class: "w-6 h-6") %>
+          </div>
+        </div>
+      </div>
+
+      <%# パスワード確認 %>
+      <div class="field">
+        <%= f.label :password_confirmation, "パスワード(確認用)", class: "block text-sm font-bold mb-2" %>
+
+        <div class="relative">
+          <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "••••••••••••••••",
+              class: "w-full px-4 py-3 rounded-xl border-none shadow-sm text-gray-700 placeholder-gray-400 focus:ring-2 focus:ring-orange-300 outline-none tracking-widest" %>
+
+          <%# 目のアイコン（見た目のみ） %>
+          <div class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer text-gray-500">
+            <%= lucide_icon('eye', class: "w-6 h-6") %>
+          </div>
+        </div>
+      </div>
+
+      <%# 利用規約 & ボタンエリア %>
+      <div class="flex flex-col items-center gap-6 pt-8">
+
+        <%= link_to "利用規約", "#", class: "text-blue-400 hover:text-blue-600 underline" %>
+        <%= link_to "プライバシーポリシー", "#", class: "text-blue-400 hover:text-blue-600 underline" %>
+
+        <div class="flex flex-col items-center gap-3">
+          <%# ログインボタン（小さめのオレンジボタン） %>
+          <%= f.submit "同意して登録する", class: "bg-orange-400 hover:bg-orange-500 text-white font-bold py-2 px-10 rounded-full shadow-md cursor-pointer transition" %>
+          <%# 注意事項 %>
+          <div class="text-center text-xs text-gray-400 mb-2 w-full">
+            ※登録をもって利用規約・プライバシーポリシーに同意したものとみなします
+          </div>
+        </div>
+
+      </div>
+
+    <% end %>
+  </div>
+
+  <%# 3. フッターエリア（ログインリンク） %>
+  <div class="mt-auto w-full max-w-sm pt-10">
+    <p class="text-center text-xs text-gray-400 mb-2">すでにアカウントをお持ちの方は
+      <%= link_to "ログイン", new_user_session_path, class: "text-sm text-blue-400 hover:text-blue-600 underline" %>
+    </p>
+  </div>
+
+</div>

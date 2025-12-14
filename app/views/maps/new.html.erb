@@ -6,3 +6,6 @@
 <h1 class="font-rounded">見出し</h1>
 <% test = 'accessibility' %>
 <%= lucide_icon('accessibility') %>
+
+<%# button_to を使うのがポイント（自動でDELETEメソッドにしてくれます） %>
+<%= button_to "ログアウト", destroy_user_session_path, method: :delete %>
