@@ -4,8 +4,23 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.2]
   def change
     create_table :users do |t|
       ## Database authenticatable
-      t.string :email,              null: false, default: ""
-      t.string :encrypted_password, null: false, default: ""
+      # ゲストはメアドがないので、 null: true にして、デフォルトはnilにする
+      t.string :email,              null: true,  default: nil
+
+      # ゲストはパスワード設定もしないので null: true にする
+      t.string :encrypted_password, null: true,  default: nil
+
+      # ニックネーム。デフォルトはゲスト
+      t.string :nickname,           null: false, default: "ゲスト"
+
+      # 権限 (0: ゲスト, 10: 一般, 99: 運営)
+      t.integer :role,              null: false, default: 0
+
+      # 累計地図の公開用UUID
+      t.uuid :public_uid,           null: false, default: -> { "gen_random_uuid()" }
+
+      # 地図公開範囲 (0: 非公開, 10: 限定公開, 30: 公開)
+      t.integer :map_privacy,       null: false, default: 0
 
       ## Recoverable
       t.string   :reset_password_token
@@ -38,6 +53,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.2]
 
     add_index :users, :email,                unique: true
     add_index :users, :reset_password_token, unique: true
+    add_index :users, :public_uid,           unique: true
     # add_index :users, :confirmation_token,   unique: true
     # add_index :users, :unlock_token,         unique: true
   end
