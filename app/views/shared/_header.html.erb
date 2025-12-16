@@ -1,0 +1,33 @@
+<%# locals: (title: nil, back_path: nil, menu_path: nil, close: false, bg_color: "bg-gray-100") %>
+
+<header class="fixed top-0 left-0 w-full z-10 flex items-center h-10 px-2
+  <% if bg_color.present? %>
+    <%= bg_color %>
+  <% end %>
+">
+  <%# 左の要素 %>
+  <div class="flex items-center gap-2">
+    <% if back_path.present? %>
+      <%= link_to back_path, class: "back-button" do %>
+        <%= lucide_icon('arrow-left-from-line') %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <%# 真ん中の要素　%>
+  <div class="absolute left-1/2 -translate-x-1/2 font-rounded">
+    <% if title.present? %>
+      <%= title %>
+    <% end %>
+  </div>
+
+  <%#　右の要素 %>
+  <div class="ml-auto flex items-center gap-2">
+    <% if menu_path.present? %>
+      <%= link_to lucide_icon('ellipsis-vertical'), menu_path, class: "back-button" %>
+    <% end %>
+    <% if close %>
+      <%= lucide_icon('circle-x') %>
+    <% end %>
+  </div>
+</header>

@@ -23,12 +23,19 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="bg-green-900 min-h-[200vh]" >
+  <body class="min-h-[100vh]" >
     <%= render "shared/flash_message" %>
+    <%= yield :header %>
     <main class="font-sans">
       <%= yield %>
     </main>
     <%# フッター %>
-    <%= render "shared/footer" %>
+    <%# ▼ フッターを表示したいURLのリスト %>
+    <% footer_allowed_paths = [
+      root_path,
+    ] %>
+    <% if footer_allowed_paths.include?(request.path) %>
+      <%= render "shared/footer" %>
+    <% end %>
   </body>
 </html>
