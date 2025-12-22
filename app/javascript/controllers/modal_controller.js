@@ -1,0 +1,23 @@
+import { Controller } from "@hotwired/stimulus"
+
+export default class extends Controller {
+  static targets = [ "modalBox", "modalBackdrop" ]
+
+  connect() {
+    requestAnimationFrame(() => {
+      this.element.classList.remove("opacity-0")
+      this.modalBoxTarget.classList.remove("opacity-0", "translate-y-40")
+    })
+  }
+
+  close() {
+    requestAnimationFrame(() => {
+      this.element.classList.add("opacity-0")
+      this.modalBoxTarget.classList.add("opacity-0", "translate-y-40")
+    })
+
+    this.modalBoxTarget.addEventListener("transitionend", () => {
+      this.element.remove();
+    }, { once: true });
+  }
+}

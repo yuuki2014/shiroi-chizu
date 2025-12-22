@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   # resources :users, param: :public_uid, only: [ :show ]
   get "users/:public_uid", to: "users#show", as: "user"
   get "mypage", to: "users#mypage", as: "mypage"
+  resource :tutorial, only: [ :show, :update ]
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
