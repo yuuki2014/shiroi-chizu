@@ -1,6 +1,6 @@
-class CreateMaps < ActiveRecord::Migration[7.2]
+class CreateTrips < ActiveRecord::Migration[7.2]
   def change
-    create_table :maps do |t|
+    create_table :trips do |t|
       t.references :user, null: false, foreign_key: true
 
       # 地図の名前。デフォルト値はrailsで設定する
@@ -27,6 +27,6 @@ class CreateMaps < ActiveRecord::Migration[7.2]
       t.timestamps
     end
 
-    add_index :maps, :public_uid, unique: true
+    add_index :trips, :public_uid, unique: true
   end
 end
