@@ -46,7 +46,7 @@ export default class extends Controller {
       },
       // 移動に合わせてドットが動く
       trackUserLocation: true,
-      // スマホの向いている方角を表示するか
+      // スマホの向いている方角を表示
       showUserHeading: true,
       // ズームカメラの設定
       fitBoundsOptions: {
@@ -69,7 +69,8 @@ export default class extends Controller {
       // オプションを現在のズームレベルで書き換え
       geolocate.options.fitBoundsOptions = {
         maxZoom: currentZoom,
-        minZoom: currentZoom,
+        linear: true,
+        duration: 2000
       }
 
       return originalTrigger();
@@ -80,8 +81,8 @@ export default class extends Controller {
     // 現在地を取得
     geolocate.on('geolocate', (data) => {
 
-      const lat = data.coords.latitude;  // 緯度
       const lng = data.coords.longitude; // 経度
+      const lat = data.coords.latitude;  // 緯度
       const recordTime = data.timestamp; // 取得時間
       num += 1;
 
@@ -89,8 +90,8 @@ export default class extends Controller {
       console.log("取得時刻:", recordTime);
       console.log("現在地取得:", lat, lng);
 
-      this.currentLat = lat;
       this.currentLng = lng;
+      this.currentLat = lat;
       this.currentRecordTime = recordTime;
     })
 
