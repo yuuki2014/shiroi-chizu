@@ -1,27 +1,43 @@
 <footer class="fixed bottom-0 left-0 w-full pb-4 z-20 pointer-events-none">
-  <div class="mx-auto max-w-md px-4 pointer-events-auto">
-    <div class="bg-white/70 backdrop-blur-md rounded-2xl shadow-lg px-6 py-3">
-      <nav class="flex">
-        <%= link_to root_path, class: tab_class(root_path) do %>
-          <%= lucide_icon('map') %>
-          <span class="text-xs">地図</span>
-        <% end %>
+  <%# ▼ ここに relative を追加（ここを基準点にするため） %>
+  <div class="mx-auto max-w-md px-4 pointer-events-auto relative">
 
-        <%= link_to trips_path, class: tab_class(trips_path) do %>
-          <%= lucide_icon('history') %>
-          <span class="text-xs">履歴</span>
-        <% end %>
+    <%# ▼▼▼ 追加したいアイコンエリア ▼▼▼ %>
+    <%# absolute: 絶対配置 %>
+    <%# bottom-full: 親要素の高さ分だけ上にずらす（＝親の頭上に配置） %>
+    <%# right-4: 右端から少し離す（お好みで） %>
+    <%# mb-3: フッターとの隙間 %>
+    <div class="absolute bottom-full right-4 mb-3">
+      <button class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition">
+        <%= lucide_icon('map-pin') %>
+      </button>
+    </div>
+    <%# ▲▲▲ 追加終わり ▲▲▲ %>
 
-        <%= link_to tutorial_path, class: tab_class(tutorial_path), data: { turbo_stream: true } do %>
-          <%= lucide_icon('users') %>
-          <span class="text-xs">みんなの地図</span>
-        <% end %>
+    <div class="mx-auto max-w-md px-4 pointer-events-auto">
+      <div class="bg-white/70 backdrop-blur-md rounded-2xl shadow-lg px-6 py-3">
+        <nav class="flex">
+          <%= link_to root_path, class: tab_class(root_path) do %>
+            <%= lucide_icon('map') %>
+            <span class="text-xs">地図</span>
+          <% end %>
 
-        <%= link_to mypage_path, class: tab_class(mypage_path) do %>
-          <%= lucide_icon('circle-user-round') %>
-          <span class="text-xs">マイページ</span>
-        <% end %>
-      </nav>
+          <%= link_to trips_path, class: tab_class(trips_path) do %>
+            <%= lucide_icon('history') %>
+            <span class="text-xs">履歴</span>
+          <% end %>
+
+          <%= link_to tutorial_path, class: tab_class(tutorial_path), data: { turbo_stream: true } do %>
+            <%= lucide_icon('users') %>
+            <span class="text-xs">みんなの地図</span>
+          <% end %>
+
+          <%= link_to mypage_path, class: tab_class(mypage_path) do %>
+            <%= lucide_icon('circle-user-round') %>
+            <span class="text-xs">マイページ</span>
+          <% end %>
+        </nav>
+      </div>
     </div>
   </div>
 </footer>
