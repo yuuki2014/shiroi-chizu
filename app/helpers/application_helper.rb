@@ -16,9 +16,17 @@ module ApplicationHelper
       mypage_path
     ]
 
-    if current_user
+    if user_signed_in?
       allowed_paths << user_path(current_user)
     end
+
+    allowed_paths.include?(request.path)
+  end
+
+  def show_recording_button?
+    allowed_paths = [
+      root_path
+    ]
 
     allowed_paths.include?(request.path)
   end

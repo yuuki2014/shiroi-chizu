@@ -1,4 +1,15 @@
 class Trip < ApplicationRecord
+  # テーブルデータ
+  # id、主キー
+  # user_id null: false、外部キー
+  # name, string, null: false、地図の名前、デフォルトで開始時の場所から名前をつける
+  # activity_time, integer, default: 0, null: false、活動時間を秒数で保存
+  # total_distance, integer, default: 0, null: false、合計距離をmで保存
+  # public_uid, uuid, default: -> { "gen_random_uuid()" }, null: false、地図公開用URLに使用するUUID
+  # status, integer, default: 0, null: false、地図の公開ステータス
+  # started_at, datetime,null: false、地図の作成開始時刻
+  # ended_at, datetime、地図の作成終了時刻
+
   # enum 定義
   # 地図の公開ステータス
   # 非公開:0, 限定公開:10, 公開:20

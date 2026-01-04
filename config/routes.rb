@@ -29,4 +29,20 @@ Rails.application.routes.draw do
   post "decisions", to: "decisions#create", as: :decisions
   get "location_denied", to: "tutorials#location_denied", as: :location_denied
   root "trips#new"
+
+  namespace :api do
+    namespace :v1 do
+      resources :trips, only: %i[ create update ] do
+        member do
+          get :end_check
+        end
+
+        resources :footprints, only: [ :create ] do
+          collection do
+            post :bulk_create
+          end
+        end
+      end
+    end
+  end
 end
