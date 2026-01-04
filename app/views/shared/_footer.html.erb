@@ -1,21 +1,83 @@
-<footer class="fixed bottom-0 left-0 w-full pb-4 z-20 pointer-events-none">
-  <%# ▼ ここに relative を追加（ここを基準点にするため） %>
-  <div class="mx-auto max-w-md px-4 pointer-events-auto relative">
+<footer class="fixed bottom-0 left-0 w-full z-20 pointer-events-none" data-ui-target="footer">
+  <div class="relative w-full">
 
-    <%# ▼▼▼ 追加したいアイコンエリア ▼▼▼ %>
-    <%# absolute: 絶対配置 %>
-    <%# bottom-full: 親要素の高さ分だけ上にずらす（＝親の頭上に配置） %>
-    <%# right-4: 右端から少し離す（お好みで） %>
-    <%# mb-3: フッターとの隙間 %>
-    <div class="absolute bottom-full right-4 mb-3">
-      <button class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 transition">
-        <%= lucide_icon('map-pin') %>
-      </button>
-    </div>
-    <%# ▲▲▲ 追加終わり ▲▲▲ %>
+    <%# ▼▼▼ アイコンエリア ▼▼▼ %>
+    <% if show_recording_button? %>
 
-    <div class="mx-auto max-w-md px-4 pointer-events-auto">
-      <div class="bg-white/70 backdrop-blur-md rounded-2xl shadow-lg px-6 py-3">
+      <%# 左側ボタンコンテナ %>
+      <div class="absolute bottom-full left-0 pl-4 mb-3 pointer-events-auto -translate-x-full duration-500" data-ui-target="leftButtonContainer">
+
+        <%# 再生ボタン %>
+        <%= tag.button type: "button",
+          data: { action: "click->ui#resumeRecording", ui_target: "playButton" },
+          class: "btn btn-primary bg-gray-300 text-black p-3 rounded-full shadow-lg ring-1 ring-black/20 hover:bg-gray-400 active:scale-95 transition hidden" do %>
+          <%= lucide_icon('play') %>
+        <% end %>
+
+        <%# 一時停止ボタン %>
+        <%= tag.button type: "button",
+          data: { action: "click->ui#pauseRecording", ui_target: "pauseButton" },
+          class: "btn btn-primary bg-gray-300 text-black p-3 rounded-full shadow-lg ring-1 ring-black/20 hover:bg-gray-400 active:scale-95 transition" do %>
+          <%= lucide_icon('pause') %>
+        <% end %>
+
+      </div>
+
+      <%# 右側ノーマルボタンコンテナ %>
+      <div class="absolute bottom-full right-0 pr-4 mb-3 pointer-events-auto duration-500" data-ui-target="rightNormalButtonContainer">
+
+        <%# 探索開始ボタン %>
+        <%= form_with model: @trip, url: api_v1_trips_path, method: :post, data: { action: "submit->ui#checkGeolocate", turbo: true } do |f| %>
+          <%= f.hidden_field :latitude, id: "latitude" %>
+          <%= f.hidden_field :longitude, id: "longitude" %>
+          <%= f.button type: "submit",
+            class: "btn btn-primary bg-yellow-400/80 text-black p-3 rounded-full shadow-lg hover:bg-yellow-500/80 transition" do %>
+            <%= lucide_icon('footprints') %>
+          <% end %>
+        <% end %>
+
+      </div>
+
+      <%# 右側探索中ボタンコンテナ %>
+      <div class="absolute bottom-full right-0 pr-4 mb-3 flex flex-col-reverse gap-3 pointer-events-auto duration-500 translate-x-full" data-ui-target="rightRecordingButtonContainer">
+
+        <%# 現在地ボタン %>
+        <%= tag.button type: "button",
+          data: { action: "" },
+          class: "btn btn-primary bg-yellow-400/80 text-black p-3 rounded-full shadow-lg hover:bg-yellow-500/80 active:scale-95 transition" do %>
+          <%= lucide_icon('locate') %>
+        <% end %>
+
+        <%# 画像投稿ボタン %>
+        <%= tag.button type: "button",
+          data: { action: "" },
+          class: "btn btn-primary bg-yellow-400/80 text-black p-3 rounded-full shadow-lg hover:bg-yellow-500/80 active:scale-95 transition" do %>
+          <%= lucide_icon('map-pin') %>
+        <% end %>
+
+        <%# 累計地図表示ボタン %>
+        <%= tag.button type: "button",
+          data: { action: "" },
+          class: "btn btn-primary bg-yellow-400/80 text-black p-3 rounded-full shadow-lg hover:bg-yellow-500/80 active:scale-95 transition" do %>
+          <%= lucide_icon('map') %>
+        <% end %>
+
+      </div>
+
+      <%# 下側一時停止ボタンコンテナ %>
+      <div class="absolute bottom-full left-1/2 -translate-x-1/2 pr-4 mb-3 pointer-events-auto duration-500 translate-y-[calc(100%+6rem)]" data-ui-target="pauseButtonContainer">
+
+        <%# 停止ボタン %>
+      <div id="end-trip-button-container"></div>
+
+      </div>
+
+    <% end %>
+    <%# ▲▲▲ アイコンエリア ▲▲▲ %>
+
+    <%# ▼▼▼ タブバーエリア ▼▼▼ %>
+    <div class="mx-auto max-w-md px-4 pointer-events-auto transition-transform duration-500 pb-4" data-ui-target="bottomSheet">
+      <div class="bg-white/20 backdrop-blur-sm rounded-2xl shadow-lg px-6 py-3">
         <nav class="flex">
           <%= link_to root_path, class: tab_class(root_path) do %>
             <%= lucide_icon('map') %>
@@ -39,5 +101,7 @@
         </nav>
       </div>
     </div>
+    <%# ▲▲▲ タブバーエリア ▲▲▲ %>
+
   </div>
 </footer>

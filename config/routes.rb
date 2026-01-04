@@ -32,7 +32,17 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :trips, only: [ :create ]
+      resources :trips, only: %i[ create update ] do
+        member do
+          get :end_check
+        end
+
+        resources :footprints, only: [ :create ] do
+          collection do
+            post :bulk_create
+          end
+        end
+      end
     end
   end
 end

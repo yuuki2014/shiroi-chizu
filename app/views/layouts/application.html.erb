@@ -26,7 +26,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body class="" >
+  <body class="" data-controller="ui" data-ui-map-outlet="#main-map">
     <%= yield :header %>
     <main class="font-sans">
       <%= yield %>

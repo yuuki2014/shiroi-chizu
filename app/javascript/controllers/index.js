@@ -21,3 +21,6 @@ application.register("modal", ModalController)
 
 import SwiperController from "./swiper_controller"
 application.register("swiper", SwiperController)
+
+import UiController from "./ui_controller"
+application.register("ui", UiController)
