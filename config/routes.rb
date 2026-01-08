@@ -25,7 +25,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :trips, only: [ :new, :index ]
+  resources :trips, only: [ :new, :index, :show ] do
+    patch :status, on: :member
+  end
   post "decisions", to: "decisions#create", as: :decisions
   get "location_denied", to: "tutorials#location_denied", as: :location_denied
   root "trips#new"

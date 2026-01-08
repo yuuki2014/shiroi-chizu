@@ -33,9 +33,16 @@ class Api::V1::TripsController < ApplicationController
       activity_time: activity_time,
       total_distance: total_distance)
 
-      respond_to do |format|
-        format.html { redirect_to root_path }
-        format.turbo_stream
+      if current_user.general?
+        respond_to do |format|
+          format.html { redirect_to root_path }
+          format.turbo_stream
+        end
+      elsif current_user.guest?
+        respond_to do |format|
+          format.html { redirect_to root_path }
+          format.turbo_stream { render :guest_update }
+        end
       end
     else
       flash.now[:alert] = "保存に失敗しました"

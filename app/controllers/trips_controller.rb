@@ -5,4 +5,47 @@ class TripsController < ApplicationController
   def index
     flash[:notice] = "フラッシュテスト"
   end
+
+  def status
+    @trip = current_user.trips.find_by(id: params[:id])
+
+    # x に投稿ボタンからここにきて、公開設定が自分だけ以外の時はreturnで変更なし
+    return if params.dig(:trip, :x) && !@trip.visibility_private?
+
+    if @trip.nil?
+      flash.now[:alert] = "不正な Trip Id が検出されました。"
+      return respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { render "shared/flash_message" }
+      end
+    end
+
+    if @trip.update(trip_param_status)
+      flash.now[:notice] = "公開設定を更新しました。"
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream
+      end
+    else
+      flash.now[:alert] = "公開設定の更新に失敗しました。"
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { render "shared/flash_message" }
+      end
+    end
+  rescue ArgumentError => e
+    Rails.logger.warn "不正なEnum値によるエラー: #{e.message}"
+
+    flash.now[:alert] = "公開設定に不正な値が指定されました。"
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream { render "shared/flash_message" }
+    end
+  end
+
+  private
+
+  def trip_param_status
+    params.require(:trip).permit(:status)
+  end
 end

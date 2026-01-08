@@ -2,7 +2,16 @@ module ApplicationHelper
   def tab_class(path)
     base = "flex-1 flex flex-col items-center justify-center gap-1 text-gray-400 active:scale-95 transition hover:bg-gray-100 rounded-xl user-select: none"
 
-    if current_page?(path)
+    is_active = current_page?(path)
+
+    # mypageからリダイレクトされて開いているユーザー詳細ページもアクティブに
+    if path == mypage_path
+      if controller_name == "users" && action_name == "show"
+        is_active = true
+      end
+    end
+
+    if is_active
       "#{base} text-gray-900 font-medium"
     else
       "#{base} text-gray-400"
