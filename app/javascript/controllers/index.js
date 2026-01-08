@@ -4,11 +4,14 @@
 
 import { application } from "./application"
 
+import CopyController from "./copy_controller"
+application.register("copy", CopyController)
+
 import DispatchController from "./dispatch_controller"
 application.register("dispatch", DispatchController)
 
-import FlushController from "./flush_controller"
-application.register("flush", FlushController)
+import FlashController from "./flash_controller"
+application.register("flash", FlashController)
 
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
