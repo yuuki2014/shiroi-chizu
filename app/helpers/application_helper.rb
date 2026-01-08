@@ -6,7 +6,7 @@ module ApplicationHelper
 
     # mypageからリダイレクトされて開いているユーザー詳細ページもアクティブに
     if path == mypage_path
-      if controller_name == 'users' && action_name == 'show'
+      if controller_name == "users" && action_name == "show"
         is_active = true
       end
     end
