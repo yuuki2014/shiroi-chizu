@@ -15,7 +15,7 @@
     </div> %>
 
     <%# --- アクションボタンエリア --- %>
-    <div class="flex flex-col items-start space-y-4 pl-8">
+    <div class="flex flex-col items-start gap-4 pl-8">
 
       <%# タイトル編集ボタン %>
       <button class="flex items-center gap-3 rounded-full bg-[#FFE4C4] px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-[#ffd8a8]">
@@ -34,12 +34,16 @@
       </button>
 
       <%# 地図削除ボタン %>
-      <button class="flex items-center gap-3 rounded-full bg-[#FFE4C4] px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-[#ffd8a8]">
+      <%= button_to confirm_destroy_trip_path(params.dig(:trip_id)),
+            method: :get,
+            params: { format: :turbo_stream },
+            form: { class: "contents" },
+            class: "flex items-center gap-3 rounded-full bg-[#FFE4C4] px-3 py-2 text-sm font-medium text-gray-600 transition hover:bg-[#ffd8a8]" do %>
         <div class="flex items-center justify-center text-red-500">
           <%= lucide_icon("trash-2") %>
         </div>
         <span class="text-red-500">この地図を削除する</span>
-      </button>
+      <% end %>
 
     </div>
 
