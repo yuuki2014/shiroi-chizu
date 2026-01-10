@@ -69,6 +69,37 @@ class TripsController < ApplicationController
     end
   end
 
+  def confirm_destroy
+    @trip = current_user.trips.find_by(id: params[:id])
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream
+    end
+  end
+
+  def destroy
+    @trip = current_user.trips.find_by(id: params[:id])
+
+    if @trip.nil?
+      flash.now[:alert] = "この地図は削除できません"
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { render "shared/flash_message" }
+      end
+    end
+
+    if @trip
+      redirect_to trips_path, notice: "地図を削除しました"
+    else
+      flash.now[:alert] = "地図の削除に失敗しました"
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { render "shared/flash_message" }
+      end
+    end
+  end
+
   private
 
   def trip_param_status

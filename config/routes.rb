@@ -25,8 +25,9 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  resources :trips, only: [ :new, :index, :show ] do
+  resources :trips, only: %i[ index show destroy ] do
     member do
+      get "confirm_destroy", to: "trips#confirm_destroy"
       patch :status
     end
     resource :bottom_sheets, only: %i[ show ]
