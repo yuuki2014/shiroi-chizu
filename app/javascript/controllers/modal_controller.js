@@ -17,9 +17,12 @@ export default class extends Controller {
       this.modalBoxTarget.classList.add("opacity-0", "translate-y-40")
     })
 
-    this.modalBoxTarget.addEventListener("transitionend", () => {
+    // this.modalBoxTarget.addEventListener("transitionend", () => {
+    //   this.element.remove();
+    // }, { once: true });
+    setTimeout(() => {
       this.element.remove();
-    }, { once: true });
+    }, 300);
   }
 
   open(event){
