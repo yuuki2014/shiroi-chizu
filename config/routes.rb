@@ -36,6 +36,9 @@ Rails.application.routes.draw do
   get "location_denied", to: "tutorials#location_denied", as: :location_denied
   root "trips#new"
 
+  get "privacy_policy", to: "pages#privacy_policy"
+  get "terms", to: "pages#terms"
+
   namespace :api do
     namespace :v1 do
       resources :trips, only: %i[ create update ] do
