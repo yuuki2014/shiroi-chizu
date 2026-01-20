@@ -34,7 +34,15 @@ class TripsController < ApplicationController
   end
 
   def edit_status
-    @trip = current_user.trips.find_by(id: params[:id])
+    @trip = current_user&.trips&.find_by(id: params[:id])
+
+    if @trip.nil?
+      flash.now[:alert] = "権限がありません"
+      return respond_to do |format|
+        format.html { redirect_to root_path }
+        format.turbo_stream { render "shared/flash_message" }
+      end
+    end
 
     respond_to do |format|
       format.html { redirect_to root_path }
