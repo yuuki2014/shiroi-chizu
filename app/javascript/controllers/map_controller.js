@@ -452,7 +452,7 @@ export default class extends Controller {
 
   // 溜めたバッファを一気にポスト
   async flushBuffer(){
-    if(this.footprintBuffer.length === 0) return;
+    if(!this.footprintBuffer?.length) return;
 
     const csrfToken = document.querySelector('meta[name="csrf-token"]').content
 

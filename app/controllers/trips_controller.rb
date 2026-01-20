@@ -33,6 +33,15 @@ class TripsController < ApplicationController
     end
   end
 
+  def edit_status
+    @trip = current_user.trips.find_by(id: params[:id])
+
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.turbo_stream
+    end
+  end
+
   def status
     @trip = current_user.trips.find_by(id: params[:id])
 

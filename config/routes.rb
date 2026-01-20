@@ -29,9 +29,11 @@ Rails.application.routes.draw do
     member do
       get "confirm_destroy", to: "trips#confirm_destroy"
       patch :status
+      get :edit_status
     end
     resource :bottom_sheets, only: %i[ show ]
   end
+
   post "decisions", to: "decisions#create", as: :decisions
   get "location_denied", to: "tutorials#location_denied", as: :location_denied
   root "trips#new"
