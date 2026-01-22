@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_12_15_135824) do
+ActiveRecord::Schema[7.2].define(version: 2025_12_23_110526) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "footprints", force: :cascade do |t|
+    t.bigint "trip_id", null: false
+    t.float "latitude", null: false
+    t.float "longitude", null: false
+    t.string "geohash", null: false
+    t.datetime "recorded_at", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["trip_id", "geohash"], name: "index_footprints_on_trip_id_and_geohash"
+    t.index ["trip_id", "recorded_at"], name: "index_footprints_on_trip_id_and_recorded_at"
+    t.index ["trip_id"], name: "index_footprints_on_trip_id"
+  end
+
+  create_table "trips", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "name", null: false
+    t.integer "activity_time", default: 0, null: false
+    t.integer "total_distance", default: 0, null: false
+    t.uuid "public_uid", default: -> { "gen_random_uuid()" }, null: false
+    t.integer "status", default: 0, null: false
+    t.datetime "started_at", null: false
+    t.datetime "ended_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["public_uid"], name: "index_trips_on_public_uid", unique: true
+    t.index ["user_id"], name: "index_trips_on_user_id"
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email"
@@ -32,4 +60,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_12_15_135824) do
     t.index ["public_uid"], name: "index_users_on_public_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
+
+  add_foreign_key "footprints", "trips"
+  add_foreign_key "trips", "users"
 end

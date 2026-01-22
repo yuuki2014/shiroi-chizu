@@ -1,6 +1,6 @@
 import { Controller } from "@hotwired/stimulus"
 
-// Connects to data-controller="flash"
+// Connects to data-controller="flush"
 export default class extends Controller {
   connect() {
     requestAnimationFrame(() => {
@@ -9,6 +9,9 @@ export default class extends Controller {
 
     setTimeout(() => {
       this.element.classList.add("opacity-0")
+      this.element.addEventListener("transitionend", () => {
+      this.element.remove();
+    }, { once: true });
     }, 1500)
   }
 }

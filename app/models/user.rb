@@ -1,8 +1,7 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
 
   # enum 定義
   # ゲスト:0, 一般会員:10, 管理者:99
@@ -13,6 +12,12 @@ class User < ApplicationRecord
   # バリデーション定義
   # UUIDは保存の直前にDBが生成してくれるので、ここでは設定しない
   validates :nickname, :role, :map_privacy, presence: true
+
+  # アソシエーション定義
+  # 作成した地図
+  has_many :trips, dependent: :destroy
+  # trips を経由して footprints を取得
+  has_many :footprints, through: :trips
 
   # Devise の機能をオーバーライド
   # ゲスト以外の時だけメールアドレスを必須にする
