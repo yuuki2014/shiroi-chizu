@@ -52,7 +52,7 @@ module ApplicationHelper
       end
     end
 
-    return false
+    false
   end
 
   def show_recording_button?
@@ -88,7 +88,7 @@ module ApplicationHelper
       end
     end
 
-    return false
+    false
   end
 
   def show_history_button?

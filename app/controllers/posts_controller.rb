@@ -16,13 +16,13 @@ class PostsController < ApplicationController
 
     if @post.save
       flash.now[:notice] = "地図に記録しました"
-      return respond_to do |format|
+      respond_to do |format|
         format.html { redirect_to root_path }
         format.turbo_stream
       end
     else
       flash.now[:alert] = "記録に失敗しました"
-      return respond_to do |format|
+      respond_to do |format|
         format.html { redirect_to root_path }
         format.turbo_stream { render "shared/flash_and_error" }
       end
@@ -30,7 +30,7 @@ class PostsController < ApplicationController
   end
 
   def select_position
-    @trip = current_user.trips.find_by(params[:id])
+    @trip = current_user.trips.find_by(id: params[:id])
 
     respond_to do |format|
       format.html { redirect_to root_path }
